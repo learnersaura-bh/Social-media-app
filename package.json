@@ -3,6 +3,7 @@
     "dayjs": "^1.11.8",
     "jwt-decode": "^3.1.2",
     "jwt-encode": "^1.0.1",
-    "miragejs": "^0.1.47"
+    "miragejs": "^0.1.47",
+    "react-router-dom": "^6.12.1"
   }
 }
