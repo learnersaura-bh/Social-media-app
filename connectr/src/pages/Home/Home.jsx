@@ -182,18 +182,24 @@ console.log(followedUsernames, "followed usernames abcdefghijklopqrstuvwxyz");
           </li>
         )
       )}
-      {editPostId && (
-        <div className="edit-post-container">
-          <input
+     {editPostId && (
+  <div className="modal-container">
+    <div className="edit-post-container">
+    <input
+    style={{height:"4rem"}}
             className="edit-post-input"
             defaultValue={state.posts.find((post) => post._id === editPostId).content}
             onChange={(event) => setEditContentInput(event.target.value)}
           />
+                    <button className="save-edit-button" style={{margin : "6px"}}  onClick={() => setEditPostId("")}> Cancel </button>
+
           <button className="save-edit-button" onClick={() => saveEditPost(editPostId, editContentInput)}>
             Save
           </button>
-        </div>
-      )}
+      
+    </div>
+  </div>
+)}
     </div>
     </div>
   </div>
