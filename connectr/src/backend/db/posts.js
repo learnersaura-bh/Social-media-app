@@ -45,14 +45,14 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    username: "pareshaaaaan",
+    username: "johndoe",
     createdAt: "06/11/2022",
     updatedAt: formatDate(),
   },
   {
     _id: uuid(),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et dapibus libero.",
-    image: "http://example.com/post1.jpg",
+    image: "https://pbs.twimg.com/media/F0hFyqtaYAEwki1?format=jpg&name=medium",
     likes: {
       likeCount: 2,
       likedBy: [],
@@ -65,7 +65,7 @@ export const posts = [
   {
     _id: uuid(),
     content: "Sed ac semper urna. Morbi at libero pharetra, ullamcorper urna in, consectetur risus.",
-    image: "http://example.com/post2.jpg",
+    image: "https://pbs.twimg.com/media/F0hFyqtaYAEwki1?format=jpg&name=medium",
     likes: {
       likeCount: 5,
       likedBy: [],
@@ -78,7 +78,7 @@ export const posts = [
   {
     _id: uuid(),
     content: "Aenean ullamcorper lorem nec nibh laoreet, non rutrum arcu hendrerit.",
-    image: "http://example.com/post3.jpg",
+    image: "https://pbs.twimg.com/media/F0hFyqtaYAEwki1?format=jpg&name=medium",
     likes: {
       likeCount: 0,
       likedBy: [],
@@ -91,7 +91,7 @@ export const posts = [
   {
     _id: uuid(),
     content: "Vivamus feugiat lacus sit amet nisl lobortis, at consectetur ligula facilisis.",
-    image: "http://example.com/post4.jpg",
+    image: "https://pbs.twimg.com/media/F0hFyqtaYAEwki1?format=jpg&name=medium",
     likes: {
       likeCount: 3,
       likedBy: [],
@@ -104,20 +104,20 @@ export const posts = [
   {
     _id: uuid(),
     content: "Praesent sem elit, congue at efficitur vel, convallis id enim.",
-    image: "http://example.com/post5.jpg",
+    image: "https://pbs.twimg.com/media/F0nferSaMAA_QZL?format=jpg&name=medium",
     likes: {
       likeCount: 1,
       likedBy: [],
       dislikedBy: [],
     },
-    username: "pareshaaaaan",
+    username: "johndoe",
     createdAt: "2023-07-05",
     updatedAt: formatDate(),
   },
   {
     _id: uuid(),
     content: "Nullam euismod enim a magna efficitur, sit amet placerat mi congue.",
-    image: "http://example.com/post6.jpg",
+    image: "https://pbs.twimg.com/media/F0m6VzRakAIUC0U?format=jpg&name=large",
     likes: {
       likeCount: 7,
       likedBy: [],
@@ -130,7 +130,7 @@ export const posts = [
   {
     _id: uuid(),
     content: "Fusce vel justo sed nulla porttitor scelerisque non nec enim.",
-    image: "http://example.com/post7.jpg",
+    image: "https://pbs.twimg.com/media/F0hFyqtaYAEwki1?format=jpg&name=medium",
     likes: {
       likeCount: 4,
       likedBy: [],
