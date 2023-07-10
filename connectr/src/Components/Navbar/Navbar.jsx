@@ -7,7 +7,7 @@ import "./Navbar.css";
 export const Navbar = () => {
     const navigate = useNavigate()
     const loggedUser = localStorage?.getItem("user");
-const {username : loggedUsername  , fullName} = JSON?.parse(loggedUser);
+const user = JSON?.parse(loggedUser);
 const logoutHandler = () =>{
   localStorage.removeItem("token");
   localStorage.removeItem("user");
@@ -31,7 +31,7 @@ const logoutHandler = () =>{
           <FaIcons.FaRegBookmark />
           <span className="sidebar-item-text">Bookmark</span>
         </li>
-        <li className="sidebar-item" onClick={() => navigate(`/profile/${loggedUsername }`)}>
+        <li className="sidebar-item" onClick={() => navigate(`/profile/${user?.username }`)}>
           <AiIcons.AiOutlineUser />
           <span className="sidebar-item-text">Profile</span>
         </li>
@@ -40,10 +40,10 @@ const logoutHandler = () =>{
           <span className="sidebar-item-text">Logout</span>
         </li>
       </nav>
-      <div className="user-info cursor-pointer" onClick={() => navigate(`/profile/${loggedUsername }`)}>
+      <div className="user-info cursor-pointer" onClick={() => navigate(`/profile/${user?.username }`)}>
         
-        <p className="user-name">{fullName}</p>
-        <p className="user-username">@{loggedUsername }</p>
+        <p className="user-name">{user?.fullName}</p>
+        <p className="user-username">@{user?.username }</p>
       </div>
     </div>
     </>

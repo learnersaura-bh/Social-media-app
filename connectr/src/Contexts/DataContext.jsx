@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
   const [editPostId, setEditPostId] = useState();
   const [editContentInput, setEditContentInput] = useState();
   const loggedUser = localStorage?.getItem("user");
-const {username : loggedUserName } = JSON?.parse(loggedUser);
+const user = JSON?.parse(loggedUser);
   const getData = async () => {
     try {
       // fetching landing page posts
@@ -168,7 +168,7 @@ console.log(bookmarkIds , "bookmarksids abcdefghijklomnopqrstuvwxyz");
   const isFollowing = (id) => {
     const xyz = state.users
       ?.find(({ _id }) => id === _id)
-      .follower?.find(({ username }) => username === loggedUserName);
+      .follower?.find(({ username }) => username === user?.username);
     console.log(xyz ? "true follower" : "false follower");
     return xyz ? true : false;
   };
