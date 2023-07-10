@@ -120,7 +120,7 @@ console.log(followedUsernames, "followed usernames abcdefghijklopqrstuvwxyz");
         <option value="newest">Newest</option>
       </select>
       <h1 className="home-page-heading">Home Page</h1>
-      {followedUserPosts?.map(
+      {state?.filteredPosts?.map(
         ({
           _id,
           content,
