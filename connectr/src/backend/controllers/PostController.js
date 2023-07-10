@@ -78,6 +78,8 @@ export const createPostHandler = function (schema, request) {
       );
     }
     const { postData } = JSON.parse(request.requestBody);
+    const currentTime = new Date();
+    const formattedTime = currentTime.toLocaleDateString();
     const post = {
       _id: uuid(),
       ...postData,
@@ -87,7 +89,7 @@ export const createPostHandler = function (schema, request) {
         dislikedBy: [],
       },
       username: user.username,
-      createdAt: formatDate(),
+      createdAt: formattedTime,
       updatedAt: formatDate(),
     };
     this.db.posts.insert(post);
