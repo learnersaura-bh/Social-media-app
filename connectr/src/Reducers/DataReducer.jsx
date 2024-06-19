@@ -1,120 +1,47 @@
-// export const initialState = {
-//   posts: [],
-//   filteredPosts: [],
-//   sortBy: "",
-// };
+import { actionTypes } from "../actions/actionTypes";
 
-// export const DataReducer = (state, { type, payload }) => {
-//   switch (type) {
-//     case "User_Posts":
-//       return { ...state, posts: payload , filteredPosts: payload};
-//     case "Sort_Posts":
-//       if (payload === "trending") {
-//         return {
-//           ...state,
-//           filteredPosts: state.posts.sort(
-//             (a, b) => b.likes.likeCount - a.likes.likeCount
-//           ),
-//           sortBy: payload,
-//         };
-//       } else if (payload === "oldest") {
-//         return {
-//           ...state,
-//           filteredPosts: state.posts.sort(
-//             (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-//           ),
-//           sortBy: payload,
-//         };
-//       } else if (payload === "newest") {
-//         return {
-//           ...state,
-//           filteredPosts: state.posts.sort(
-//             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-//           ),
-//           sortBy: payload,
-//         };
-//       } else {
-//         return { ...state, filteredPosts: state.posts  , sortBy : "default"};
-//       }
-//     default:
-//       return state;
-//   }
-// };
 export const initialState = {
   posts: [],
   users: [],
   filteredPosts: [],
-  sortBy: "",
+  sortBy: "Latest",
   user: "",
+  bookmarks: [],
   bookmarkPosts: [],
-  updatedUsers : []
+  updatedUsers: [],
 };
 
 export const DataReducer = (state, { type, payload }) => {
   switch (type) {
-    case "User_Posts":
-      const updatedPosts = [...payload];
-      let updatedFilteredPosts = [...payload];
-
-      if (state.sortBy === "trending") {
-        updatedFilteredPosts = updatedFilteredPosts.sort(
-          (a, b) => b.likes.likeCount - a.likes.likeCount
-        );
-      } else if (state.sortBy === "oldest") {
-        updatedFilteredPosts = updatedFilteredPosts.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        );
-      } else if (state.sortBy === "newest") {
-        updatedFilteredPosts = updatedFilteredPosts.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-      }
-
-      return {
-        ...state,
-        posts: updatedPosts,
-        filteredPosts: updatedFilteredPosts,
-      };
-    case "Sort_Posts":
-      let sortedFilteredPosts = [...state.filteredPosts];
-
-      if (payload === "trending") {
-        sortedFilteredPosts = sortedFilteredPosts.sort(
-          (a, b) => b.likes.likeCount - a.likes.likeCount
-        );
-      } else if (payload === "oldest") {
-        sortedFilteredPosts = sortedFilteredPosts.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        );
-      } else if (payload === "newest") {
-        sortedFilteredPosts = sortedFilteredPosts.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-      }
-
-      return {
-        ...state,
-        filteredPosts: sortedFilteredPosts,
-        sortBy: payload,
-      };
-    case "Users_List":
-      return { ...state, users: payload };
-    case "User":
-      return { ...state, user: payload };
-    case "bookmark_Post":
-      return { ...state, bookmarkPosts: payload };
-      case "Users_List_After_Follow":
-        return {...state , users : payload}
-        case "Update_User":
-      const updatedUser = payload;
+    case actionTypes.SET_POSTS:
+      return { ...state, posts: payload };
+    case actionTypes.SET_SORT_BY:
+      return { ...state, sortBy: payload };
+    case actionTypes.GET_BOOKMARKS:
+    case actionTypes.ADD_BOOKMARK:
+    case actionTypes.REMOVE_BOOKMARK:
+      return { ...state, bookmarks: payload };
+    case actionTypes.EDIT_USER_PROFILE:
       const updatedUsers = state.users.map((user) =>
-        user.username === updatedUser.username ? updatedUser : user
+        user._id === payload?._id ? payload : user
       );
-
-      return {
-        ...state,
-        users: updatedUsers
-      };
+      return { ...state, users: updatedUsers };
+    case actionTypes.FOLLOW_USER:
+    case actionTypes.UNFOLLOW_USER:
+      const { followedBy, followUser } = payload;
+      const updatedUserList = state.users.map((user) => {
+        if (user._id === followedBy._id) {
+          return followedBy;
+        } else if (user._id === followUser._id) {
+          return followUser;
+        }
+        return user;
+      });
+      return { ...state, users: updatedUserList };
+    case actionTypes.SET_USERS:
+      return { ...state, users: payload };
+    case actionTypes.LOGIN_USER:
+      return { ...state, users: [...state.users, payload] };
     default:
       return state;
   }
