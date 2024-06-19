@@ -2,129 +2,34 @@ import { useContext } from "react";
 import { DataContext } from "../../Contexts/DataContext";
 import { SuggestedUsers } from "../../Components/SuggestedUsers/SuggestedUsers";
 import { Navbar } from "../../Components/Navbar/Navbar";
-import { FaBookmark, FaRegBookmark ,FaRegHeart, FaHeart, FaTrash, FaEdit } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import "../Home/Home.css";
+import { sortedPosts } from "../../utils";
+import { PostCard } from "../../Components/PostCard/PostCard";
 export const Explore = () => {
-  const { state, dispatch, addToBookmarks, removeFromBookmarks, likeHandler, dislikeHandler, saveEditPost, editPostId, setEditPostId, editContentInput, setEditContentInput, postDeleteHandler, followUser, isFollowing, unfollow, bookmarkIds } = useContext(DataContext);
-  const loggedInUser = localStorage.getItem("user");
-  const user = JSON.parse(loggedInUser);
-  const navigate = useNavigate()
-  // const followedUsernames = state?.users?.find(({ username }) => user.username === username)?.followings.map(({username}) => username);
-  
-  const followedUsernames =  state?.users?.find(({ username }) => user.username === username)?.followings?.map(({username}) => username)
-  
-  let followedUserPosts = [];
-  if (followedUsernames) {
-    followedUserPosts = state?.filteredPosts?.filter((post) => followedUsernames.includes(post.username));
-  }
-  
-  console.log(followedUserPosts, "followed user posts abcdefghijklopqrstuvwxyz");
-  console.log(followedUsernames, "followed usernames abcdefghijklopqrstuvwxyz");
-  
-  
-    const handleDropdownChange = (event) => {
-      dispatch({ type: "Sort_Posts", payload: event.target.value });
-    };
+  const { state } = useContext(DataContext);
+
+  const postsToDisplay = sortedPosts("", state?.posts);
 
   return (
     <div className="container">
-  <Navbar />
+      <div className="left-column">
+        <Navbar />
+      </div>
 
-  <div className="middle-column" >
-    <div className="home-container">
-      <div className="home-container">
-      
-      
-      <h1 className="home-page-heading">Explore</h1>
-      {state?.posts?.map(
-        ({
-          _id,
-          content,
-          likes: { likeCount, likedBy },
-          createdAt,
-          username,
-          image,
-          fullName,
-        }) => (
-          <li key={_id} className="post-item">
-            <div className="user-info" >
-              <img className="profile-pic" src={state?.users?.find((user) => user.username === username)?.profileAvatar} alt="Profile pic" onClick={() => navigate(`/profile/${username}`)} />
-              <div className="user-details">
-                <p className="user-name">{fullName}</p>
-                <p className="post-username">@{username}</p>
-                <p className="post-time">{createdAt}</p>
-              </div>
-            </div>
-            {image && (
-              <div className="post-image-container">
-                <img className="post-image" src={image} alt={username} />
-              </div>
-            )}
-            <div className="post-content">
-              <p className="post-text">{content}</p>
-              <div className="post-actions">
-                {bookmarkIds?.filter((postId) => _id === postId)?.length > 0 ? (
-                  <button className="bookmark-button" onClick={() => removeFromBookmarks(_id)}>
-                    <FaBookmark className="bookmark-icon" />
-                    
-                  </button>
-                ) : (
-                  <button className="bookmark-button" onClick={() => addToBookmarks(_id)}>
-                    <FaRegBookmark className="bookmark-icon" />
-                  </button>
-                )}
-                {!likedBy?.find(({ username }) => username === user.username) ? (
-                  <button className="like-button" onClick={() => likeHandler(_id)}>
-                    <FaRegHeart className="like-icon" />
-                  </button>
-                ) : (
-                  <button className="like-button" onClick={() => dislikeHandler(_id)}>
-                    <FaHeart className="liked-icon" /> 
-                  </button>
-                  
-                )}
-                {username === user.username && (
-                  <div style={{marginTop : "17px"}}>
-                    <button className="edit-button" onClick={() => setEditPostId(_id)}>
-                      <FaEdit className="edit-icon" />
-                    </button>
-                    <button className="delete-button" onClick={() => postDeleteHandler(_id)}>
-                      <FaTrash className="delete-icon" />
-                    </button>
-                  </div>
-                )}
-              </div>
-              <p className="like-count">{likeCount} {likeCount === 1 ? "like" : "likes"}</p>
-            </div>
-          </li>
-        )
-      )}
-      
-      {editPostId && (
-  <div className="modal-container">
-    <div className="edit-post-container">
-    <input
-    style={{height:"4rem"}}
-            className="edit-post-input"
-            defaultValue={state.posts.find((post) => post._id === editPostId).content}
-            onChange={(event) => setEditContentInput(event.target.value)}
-          />
-                    <button className="save-edit-button" style={{margin : "6px"}}  onClick={() => setEditPostId("")}> Cancel </button>
+      <div className="middle-column">
+        <div className="home-container">
+          <h1 className="home-page-heading">Explore</h1>
+          <ul>
+            {postsToDisplay.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </ul>
+        </div>
+      </div>
 
-          <button className="save-edit-button" onClick={() => saveEditPost(editPostId, editContentInput)}>
-            Save
-          </button>
-      
+      <div className="right-column">
+        <SuggestedUsers />
+      </div>
     </div>
-  </div>
-)}
-    </div>
-    </div>
-  </div>
-
-  <div className="right-column">
-    <SuggestedUsers />
-  </div>
-</div>
   );
 };

@@ -79,7 +79,7 @@ export const createPostHandler = function (schema, request) {
     }
     const { postData } = JSON.parse(request.requestBody);
     const currentTime = new Date();
-    const formattedTime = currentTime.toLocaleDateString();
+    const formattedTime = currentTime.toISOString();
     const post = {
       _id: uuid(),
       ...postData,
